@@ -47,38 +47,45 @@
 
                     </div>
 
+                    
                     <div class="mb-3">
                         <label for="type_id" class="form-label">Types</label>
                         <select class="form-select @error('type_id') is-invalid  @enderror" name="type_id" id="type_id">
                             <option selected disabled>Select a type</option>
                             <option value="">Uncategorized</option>
-
+                            
                             @forelse ($types as $type)
-                                <option value="{{ $type->id }}" {{ $type->id == old('type_id') ? 'selected' : '' }}>
-                                    {{ $type->type }}</option>
-                            @empty
+                            <option value="{{ $type->id }}" {{ $type->id == old('type_id') ? 'selected' : '' }}>
+                                {{ $type->type }}</option>
+                                @empty
                             @endforelse
 
-
+                            
                         </select>
                     </div>
                     @error('type_id')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                    
+                    {{-- Tech --}}
+                    <div class="mb-3">
+                        <label for="technologies" class="form-label">Select tech used</label>
+                        <select multiple class="form-select" name="technologies[]" id="technologies">
+                            <option disabled>Select one</option>
+
+                            <!-- TODO: Improve validation outputs -->
+                            @foreach ($technologies as $technology)
+                                <option value="{{ $technology->id }}"
+                                    {{ in_array($technology->id, old('technologies', [])) ? 'selected' : '' }}>
+                                    {{ $technology->name_tech }}</option>
+                            @endforeach
+
+                        </select>
+                    </div>
+                    @error('technologies')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
-
-                    {{-- tech --}}
-                    <div class="mb-3">
-
-                        <label for="tech" class="form-label"><strong>Tech Used</strong></label>
-
-                        <input type="text" class="form-control" name="tech" id="tech"
-                            aria-describedby="helpTitle" value="{{ old('tech') ? old('tech') : $project->tech }}">
-
-                        @error('tech')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-
-                    </div>
+                    
 
                     <div class="mb-3">
 

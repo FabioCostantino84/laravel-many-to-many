@@ -31,6 +31,7 @@
                     <small id="titleHelper" class="form-text text-muted">Scrivi un titolo per il tuo progetto</small>
                 </div>
 
+                {{-- Add file --}}
                 <div class="mb-3">
                     <label for="thumb" class="form-label">Choose file</label>
                     <input type="file" class="form-control" name="thumb" id="thumb" placeholder="Choose file"
@@ -38,6 +39,7 @@
                     <div id="fileHelpId" class="form-text">Add an image</div>
                 </div>
 
+                {{-- Description --}}
                 <div class="mb-3">
                     <label for="description" class="form-label">Descrizione</label>
                     {{-- utilizziamo la funzione old per ridare all'utente i valori inseriti prima,in caso di errore --}}
@@ -45,6 +47,7 @@
                     placeholder="Scrivi una descrizione per il tuo progetto" value="{{ old('description') }}"></textarea>
                 </div>
                 
+                {{-- Types --}}
                 <div class="mb-3">
                     <label for="type_id" class="form-label">Types</label>
                     <select class="form-select @error('type_id') is-invalid  @enderror" name="type_id" id="type_id">
@@ -57,21 +60,31 @@
                         @empty
                         @endforelse
 
-
                     </select>
                 </div>
                 @error('type_id')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
-                
-                <div class="mb-3">
-                    <label for="authors" class="form-label">Tech</label>
-                    {{-- utilizziamo la funzione old per ridare all'utente i valori inseriti prima,in caso di errore --}}
-                    <input type="text" class="form-control" name="tech" id="tech" aria-describedby="help"
-                        placeholder="Scrivi la tech utilizzata" value="{{ old('tech') }}">
-                    <small id="techHelper" class="form-text text-muted">Scrivi la tech utilizzata</small>
-                </div>
 
+                {{-- Tech --}}
+                <div class="mb-3">
+                    <label for="technologies" class="form-label">Select tech used</label>
+                    <select multiple class="form-select" name="technologies[]" id="technologies">
+                        <option disabled>Select one</option>
+    
+                        <!-- TODO: Improve validation outputs -->
+                        @foreach ($technologies as $technology )
+                        <option value="{{$technology->id}}" {{ in_array($technology->id, old('technologies', [])) ? 'selected' : '' }}>{{$technology->name_tech}}</option>
+                        @endforeach
+    
+                    </select>
+                </div>
+                @error('technologies')
+                <div class="text-danger">{{$message}}</div>
+                @enderror
+
+
+                {{-- github --}}
                 <div class="mb-3">
                     <label for="github" class="form-label">Github</label>
                     {{-- utilizziamo la funzione old per ridare all'utente i valori inseriti prima,in caso di errore --}}
