@@ -27,9 +27,26 @@
 
                     <div class="card-body">
                         <p><strong>Description: </strong>{{ $project->description }}</p>
-                        <p><strong>Type used: </strong>{{ $project->type ? $project->type->type : 'nessuna tecnologia usata'  }}</p>
-                        <p><strong>Technologies used: </strong>{{ $project->tech }}</p>
+                        <p><strong>Type used:
+                            </strong>{{ $project->type ? $project->type->type : 'nessuna tipologia usata' }}</p>
+
+                        {{-- {{dd($technologies)}} --}}
+                        {{-- tech --}}
+                        <p><strong>Technologies used: </p>
+                        @forelse ($project->technologies as $technology)
+                            <div class="badge bg-secondary">
+                                <i class="fas fa-tag fa-xs fa-fw"></i>
+                                {{ $technology->name_tech }}
+                            </div>
+                        @empty
+                            <div class="badge bg-secondary">Untagged</div>
+                        @endforelse
+
+
+                        {{-- git --}}
                         <p><i class="fa-brands fa-github"></i> {{ $project->github }}</p>
+
+                        {{-- link --}}
                         <p><i class="fa-solid fa-link"></i> {{ $project->link }}</p>
                     </div>
                 </div>
