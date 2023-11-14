@@ -29,6 +29,7 @@ class StoreProjectRequest extends FormRequest
             'type_id' => ['nullable', 'exists:types,id'],
             'github' => ['nullable', 'bail', 'url:http,https'],
             'link' => ['nullable', 'bail', 'url:http,https'],
+            'technologies' => ['nullable', 'exists:technologies,id'],
 
         ];
     }
