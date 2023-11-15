@@ -10,13 +10,14 @@
 
     <h1>Projects all</h1>
 
+
+    {{ $projects->links('pagination::bootstrap-5') }}
+
     <form class="mx-2" action="{{ route('admin.projects.create') }}">
         <button class="btn btn-success mb-3" type="submit">
             <i class="fa-solid fa-arrow-up-from-bracket"></i>
             Upload a new projects</button>
     </form>
-
-    {{ $projects->links('pagination::bootstrap-5') }}
 
     <div class="table-responsive mt-5">
         <table class="table table-striped table-hover table-borderless table-light align-middle">
@@ -43,17 +44,26 @@
                     <tr>
                         <td scope="row">{{ $project->id }}</td>
 
-                        @if (str_contains($project->thumb, 'http'))
-                            <td class="text-center align-middle"><img class="img-fluid img-fluid object-fit-cover"
-                                    style="height: 100px" src="{{ $project->thumb }}" alt="{{ $project->title }}"></td>
-                        @else
-                            <td class="text-center align-middle"><img class="img-fluid img-fluid object-fit-cover"
-                                    style="height: 100px" src="{{ asset('storage/' . $project->thumb) }}"></td>
-                        @endif
+                        <td class="text-center align-middle">
+                            @if (empty($project->thumb))
+                                {{-- Se l'URL dell'immagine non è presente --}}
+                                N/D
+                            @elseif (Str_contains($project->thumb, 'http') || Str_contains($project->thumb, 'https'))
+                                {{-- Se l'URL contiene 'http' o 'https', utilizza l'URL fornito --}}
+                                <img class="img-fluid img-fluid object-fit-cover" style="height: 100px"
+                                    src="{{ $project->thumb }}" alt="{{ $project->title }}">
+                            @else
+                                {{-- Altrimenti, utilizza l'URL relativo --}}
+                                <img class="img-fluid img-fluid object-fit-cover" style="height: 100px"
+                                    src="{{ asset('storage/' . $project->thumb) }}" alt="{{ $project->title }}">
+                            @endif
+                        </td>
+
+
 
                         <td>{{ $project->title }}</td>
                         <td>{{ $project->description }}</td>
-                        <td>{{ $project->type ? $project->type->type : 'nessuna tecnologia usata'  }}</td>
+                        <td>{{ $project->type ? $project->type->type : 'nessuna tecnologia usata' }}</td>
 
                         <td class="align-middle text-center">
                             <div class="d-inline-block d-flex">
