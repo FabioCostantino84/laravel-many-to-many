@@ -23,7 +23,9 @@ class ProjectController extends Controller
         $projects = Project::orderByDesc('id')->paginate(6); // Chiama il modello Project con all() recupera tutti i records della tabella associata, con orderByDesc('id') recupera in ordine discendente in base all' id.
         //dd($projects);
 
-        return view('admin.projects.index', compact('projects')); // Crea un array associativo dove la chiave è il nome della variabile nella vista ('projects') e il valore è la variabile nel controller ($projects).
+        $technologies = Technology::all();
+
+        return view('admin.projects.index', compact('projects', 'technologies')); // Crea un array associativo dove la chiave è il nome della variabile nella vista ('projects') e il valore è la variabile nel controller ($projects).
     }
 
     /**
@@ -66,9 +68,9 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
+        $technologies = Technology::all();
 
-
-        return view('admin.projects.show', compact('project'));
+        return view('admin.projects.show', compact('project', 'technologies'));
     }
 
     /**

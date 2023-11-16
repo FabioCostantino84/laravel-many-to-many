@@ -17,6 +17,7 @@ class Project extends Model
         'slug',
         'thumb',
         'description',
+        'type',
         'tech',
         'github',
         'link',

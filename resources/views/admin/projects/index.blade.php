@@ -32,6 +32,7 @@
                     <th scope="col">Title</th>
                     <th scope="col">Description</th>
                     <th scope="col">Type used</th>
+                    <th scope="col">Tech used</th>
                     <th scope="col">Github link</th>
                     <th scope="col">Project link</th>
                     <th scope="col">Actions</th>
@@ -63,7 +64,17 @@
 
                         <td>{{ $project->title }}</td>
                         <td>{{ $project->description }}</td>
-                        <td>{{ $project->type ? $project->type->type : 'nessuna tecnologia usata' }}</td>
+                        <td>{{ $project->type ? $project->type->type : 'nessuna tipologia usata' }}</td>
+
+                        <td>
+                            @foreach ($project->technologies as $technology)
+                                {{ $technology->name_tech }}
+                            @endforeach
+                        </td>
+                        
+
+                        {{-- {{dd($technology->technologies)}} --}}
+                        {{-- <td>{{ $technology->name_tech ? $technology->name_tech : 'nessuna tecnologia usata' }}</td> --}}
 
                         <td class="align-middle text-center">
                             <div class="d-inline-block d-flex">

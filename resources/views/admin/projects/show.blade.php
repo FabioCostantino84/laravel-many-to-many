@@ -32,22 +32,33 @@
 
                         {{-- {{dd($technologies)}} --}}
                         {{-- tech --}}
-                        <p><strong>Technologies used: </p>
+                        <div class="d-flex"><strong>Technologies used: </div>
                         @forelse ($project->technologies as $technology)
-                            <div class="badge bg-secondary">
+                            <p class="badge bg-secondary">
                                 <i class="fas fa-tag fa-xs fa-fw"></i>
                                 {{ $technology->name_tech }}
-                            </div>
+                            </p>
                         @empty
-                            <div class="badge bg-secondary">Untagged</div>
+                            <p class="badge bg-secondary">Untagged</p>
                         @endforelse
 
 
                         {{-- git --}}
-                        <p><i class="fa-brands fa-github"></i> {{ $project->github }}</p>
+                        {{-- <p><i class="fa-brands fa-github"></i> {{ $project->github }}</p> --}}
+
+                        <div class="d-inline-block d-flex">
+                            <a href="{{ $project->github }}" target="blank" class="btn btn-dark m-1">
+                                <i class="fa-brands fa-github"></i>
+                            </a>
+                        </div>
 
                         {{-- link --}}
-                        <p><i class="fa-solid fa-link"></i> {{ $project->link }}</p>
+                        <div class="d-inline-block d-flex">
+                            <a href="{{ $project->link }}" target="blank" class="btn btn-dark m-1">
+                                <i class="fa-solid fa-link"></i>
+                            </a>
+                        </div>
+
                     </div>
                 </div>
             </div>
