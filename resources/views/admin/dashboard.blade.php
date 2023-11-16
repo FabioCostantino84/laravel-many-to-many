@@ -49,9 +49,9 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="text-uppercase">
-                        <i class="fa-brands fa-github"></i> Github repo
+                        <i class="fa-solid fa-gear"></i> Tech used
                     </h4>
-                    <strong class="fs-2"> 10{{-- {{$total_projects}} --}}</strong>
+                    <strong class="fs-2">{{$total_technologies}}</strong>
 
                 </div>
                 <div class="card-footer text-end">
