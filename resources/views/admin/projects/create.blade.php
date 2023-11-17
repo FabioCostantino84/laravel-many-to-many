@@ -35,7 +35,7 @@
                 <div class="mb-3">
                     <label for="thumb" class="form-label">Choose file</label>
                     <input type="file" class="form-control" name="thumb" id="thumb" placeholder="Choose file"
-                    aria-describedby="fileHelpId">
+                        aria-describedby="fileHelpId">
                     <div id="fileHelpId" class="form-text">Add an image</div>
                 </div>
 
@@ -44,9 +44,9 @@
                     <label for="description" class="form-label">Descrizione</label>
                     {{-- utilizziamo la funzione old per ridare all'utente i valori inseriti prima,in caso di errore --}}
                     <textarea type="text" class="form-control" name="description" id="description" aria-describedby="helpId"
-                    placeholder="Scrivi una descrizione per il tuo progetto" value="{{ old('description') }}"></textarea>
+                        placeholder="Scrivi una descrizione per il tuo progetto" value="{{ old('description') }}"></textarea>
                 </div>
-                
+
                 {{-- Types --}}
                 <div class="mb-3">
                     <label for="type_id" class="form-label">Types</label>
@@ -67,20 +67,32 @@
                 @enderror
 
                 {{-- Tech --}}
-                <div class="mb-3">
-                    <label for="technologies" class="form-label">Select tech used</label>
-                    <select multiple class="form-select" name="technologies[]" id="technologies">
-                        <option disabled>Select one</option>
-    
-                        <!-- TODO: Improve validation outputs -->
-                        @foreach ($technologies as $technology )
-                        <option value="{{$technology->id}}" {{ in_array($technology->id, old('technologies', [])) ? 'selected' : '' }}>{{$technology->name_tech}}</option>
-                        @endforeach
-    
-                    </select>
+
+                <div class="dropdown my-3">
+                    <button class="btn btn-dark dropdown-toggle" type="button" id="multiSelectDropdownTech"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Technologies
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="multiSelectDropdownTech">
+                        @forelse ($technologies as $technology)
+                            <li>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="technologies[]"
+                                        value="{{ $technology->id }}" id="tech_{{ $technology->id }}"
+                                        {{ in_array($technology->id, old('technologies', [])) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="tech_{{ $technology->id }}">
+                                        {{ $technology->name_tech }}
+                                    </label>
+                                </div>
+                            </li>
+                        @empty
+                            N/A
+                        @endforelse
+                    </ul>
                 </div>
+
                 @error('technologies')
-                <div class="text-danger">{{$message}}</div>
+                    <div class="text-danger">{{ $message }}</div>
                 @enderror
 
 

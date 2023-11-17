@@ -90,6 +90,12 @@
                                     href="{{ route('admin.projects.index') }}">
                                     <i class="fa-solid fa-folder-open fa-lg fa-fw"></i> Projects
                                 </a>
+
+                                <a class="nav-link text-white {{ Route::currentRouteName() == 'project.recycle' ? 'bg-primary' : ''}}" 
+                                href="{{route('project.recycle')}}">
+                                <i class="fa-solid fa-dumpster fa-lg fa-fw"></i> Trashed
+
+                                </a>
                             </li>
 
                         </ul>

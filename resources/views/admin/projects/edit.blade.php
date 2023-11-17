@@ -22,6 +22,31 @@
 
                     <div class="mb-3">
 
+                        <div class="mb-3">
+
+                            @if (str_contains($project->thumb, 'http'))
+                                <td><img class=" img-fluid" style="height: 100px" src="{{ $project->thumb }}"
+                                        alt="{{ $project->title }}"></td>
+                            @else
+                                <td><img class=" img-fluid" style="height: 100px"
+                                        src="{{ asset('storage/' . $project->thumb) }}"></td>
+                            @endif
+
+                        </div>
+
+                        <label for="thumb" class="form-label"><strong>Choose a Thumbnail image file</strong></label>
+
+                        <input type="file" class="form-control" name="thumb" id="thumb" placeholder="Cerca..."
+                            aria-describedby="fileHelpThumb">
+
+                        @error('thumb')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+
+                    </div>
+
+                    <div class="mb-3">
+
                         <label for="title" class="form-label"><strong>Title</strong></label>
 
                         <input type="text" class="form-control" name="title" id="title"
@@ -47,45 +72,55 @@
 
                     </div>
 
-                    
+
                     <div class="mb-3">
                         <label for="type_id" class="form-label">Types</label>
                         <select class="form-select @error('type_id') is-invalid  @enderror" name="type_id" id="type_id">
                             <option selected disabled>Select a type</option>
                             <option value="">Uncategorized</option>
-                            
+
                             @forelse ($types as $type)
-                            <option value="{{ $type->id }}" {{ $type->id == old('type_id') ? 'selected' : '' }}>
-                                {{ $type->type }}</option>
-                                @empty
+                                <option value="{{ $type->id }}" {{ $type->id == old('type_id') ? 'selected' : '' }}>
+                                    {{ $type->type }}</option>
+                            @empty
                             @endforelse
 
-                            
+
                         </select>
                     </div>
+
                     @error('type_id')
-                    <div class="text-danger">{{ $message }}</div>
+                        <div class="text-danger">{{ $message }}</div>
                     @enderror
-                    
+
                     {{-- Tech --}}
-                    <div class="mb-3">
-                        <label for="technologies" class="form-label">Select tech used</label>
-                        <select multiple class="form-select" name="technologies[]" id="technologies">
-                            <option disabled>Select one</option>
 
-                            <!-- TODO: Improve validation outputs -->
-                            @foreach ($technologies as $technology)
-                                <option value="{{ $technology->id }}"
-                                    {{ in_array($technology->id, old('technologies', [])) ? 'selected' : '' }}>
-                                    {{ $technology->name_tech }}</option>
-                            @endforeach
-
-                        </select>
+                    <div class="dropdown my-3">
+                        <button class="btn btn-dark dropdown-toggle" type="button" id="multiSelectDropdownTech"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Technologies
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="multiSelectDropdownTech">
+                            @forelse ($technologies as $technology)
+                                <li>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="technologies[]"
+                                            value="{{ $technology->id }}" id="tech_{{ $technology->id }}"
+                                            {{ in_array($technology->id, old('technologies', [])) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="tech_{{ $technology->id }}">
+                                            {{ $technology->name_tech }}
+                                        </label>
+                                    </div>
+                                </li>
+                            @empty
+                                N/A
+                            @endforelse
+                        </ul>
                     </div>
                     @error('technologies')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
-                    
+
 
                     <div class="mb-3">
 
@@ -113,30 +148,6 @@
 
                     </div>
 
-                    <div class="mb-3">
-
-                        <div class="mb-3">
-
-                            @if (str_contains($project->thumb, 'http'))
-                                <td><img class=" img-fluid" style="height: 100px" src="{{ $project->thumb }}"
-                                        alt="{{ $project->title }}"></td>
-                            @else
-                                <td><img class=" img-fluid" style="height: 100px"
-                                        src="{{ asset('storage/' . $project->thumb) }}"></td>
-                            @endif
-
-                        </div>
-
-                        <label for="thumb" class="form-label"><strong>Choose a Thumbnail image file</strong></label>
-
-                        <input type="file" class="form-control" name="thumb" id="thumb" placeholder="Cerca..."
-                            aria-describedby="fileHelpThumb">
-
-                        @error('thumb')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-
-                    </div>
 
                     <button type="submit" class="btn btn-success my-3"><i class="fa-regular fa-floppy-disk"></i>
                         Save</button>
@@ -147,7 +158,5 @@
                 </form>
             </div>
         </div>
-
-        {{-- <h1>ADMIN/PROJECTS/EDIT.BLADE</h1> --}}
     </div>
 @endsection

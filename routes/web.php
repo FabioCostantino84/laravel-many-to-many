@@ -29,9 +29,12 @@ Route::middleware('auth', 'verified')->prefix('admin')->name('admin.')->group(fu
     // Tutte queste rotte inizieranno con '/admin/.....'
 
     Route::resource('projects', ProjectController::class)->parameters(['projects' => 'project:slug']);
-
-
 });
+
+Route::get('recycle', [ProjectController::class, 'recycle'])->name('project.recycle');
+
+Route::get('project/{id}/restore', [ProjectController::class, 'restore'])->name('admin.projects.restore');
+
 
 
 /* Routs Admin Profile */

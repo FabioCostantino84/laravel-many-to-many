@@ -30,7 +30,6 @@
                         <p><strong>Type used:
                             </strong>{{ $project->type ? $project->type->type : 'nessuna tipologia usata' }}</p>
 
-                        {{-- {{dd($technologies)}} --}}
                         {{-- tech --}}
                         <div class="d-flex"><strong>Technologies used: </div>
                         @forelse ($project->technologies as $technology)
@@ -54,7 +53,7 @@
 
                         {{-- link --}}
                         <div class="d-inline-block d-flex">
-                            <a href="{{ $project->link }}" target="blank" class="btn btn-dark m-1">
+                            <a href="{{ $project->link }}" target="blank" class="btn btn-info text-white">
                                 <i class="fa-solid fa-link"></i>
                             </a>
                         </div>
